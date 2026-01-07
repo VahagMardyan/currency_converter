@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    background-color: #0f3c58;
+}
+
+#parent {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.main {
+    width: 50vw;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 25px;
+    border: 1px solid black;
+    background-color: #06283D;
+}
+
+.btns {
+    width: 100%;
+    display: flex;
+}
+
+#result,
+#value,
+select,
+#search-source,
+#search-target {
+    width: 100%;
+    height: 50px;
+    border: 1px solid black;
+    font-size: 20px;
+    background-color: #0f3c58;
+}
+
+#result::placeholder,
+#value::placeholder,
+#search-source::placeholder,
+#search-target::placeholder {
+    color: rgb(219, 209, 209);
+}
+
+select {
+    cursor: pointer;
+}
+
+span {
+    font-size: 2em;
+}
+
+button {
+    width: 50%;
+    height: 40px;
+    border: 1px solid black;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #0f3c58;
+    transition: 0.5s;
+}
+
+button:hover {
+    background-color: #06283D;
+}
+
+#parent,
+.main,
+.btns,
+select,
+#result,
+#value,
+button,
+#search-source,
+#search-target {
+    color: #dFF6FF;
+}
+
+.links {
+    width: 100%;
+    height: min-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    position: fixed;
+    background-color: #06283D;
+}
+
+a {
+    color: #dFF6FF;
+    font-size: 20px;
+    transition: 0.5s;
+    text-decoration: none;
+    background-color: #0f3c58;
+}
+
+a:hover {
+    color: #9ccfe4;
+    background-color: #06283D;
+}
+
+@media screen and (max-width: 600px) {
+    .main {
+        width: 90vw;
+        gap: 15px;
+    }
+
+    button,
+    #result,
+    #value,
+    select,
+        #search-source,
+    #search-target {
+        height: 45px;
+        font-size: 18px;
+    }
+
+    span {
+        font-size: 1.5em;
+    }
+
+    .links {
+        flex-direction: column;
+        gap: 10px;
+        position: static;
+    }
+
+    a {
+        font-size: 18px;
+    }
+}

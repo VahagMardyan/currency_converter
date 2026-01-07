@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="USD currency converter">
+    <link rel="shortcut icon" href="logo/exchange.png   " type="image/x-icon">
+    <title>Currency Converter</title>
+    <script defer src="./script.js" type="module"></script>
+    <script defer src="./options.js" type="module"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+
+    </header>
+    <div id="parent">
+        <div class="main">
+            <h2>Currency Converter</h2>
+            <span></span>
+            <input type="text" placeholder="Input Money:" required id="value" autocomplete="off">
+            <select id="source" title="Choose source currency" required>
+                <option value="" selected disabled>Choose The Source Currency</option>
+                <!-- options.html -->
+            </select>
+            <input type="search" id="search-source" placeholder="Search Source:" autocomplete="off">
+            
+            <select id="target" title="Choose the target currency" required>
+                <option value="" selected disabled>Choose The Target Currency</option>
+                <!-- options.html -->
+            </select>
+            <input type="search" id="search-target" placeholder="Search target:" autocomplete="off">
+            <input type="text" id="result" placeholder="Result:" readonly>
+            <div class="btns">
+                <button id="convert" title="Alt+Enter">Convert</button>
+                <button id="reset">Reset</button>
+                <button id="convertByRealTime" title="Enter">Convert By Real Time</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
