@@ -1,15 +1,18 @@
-import { convertMoneyByRealTime, convertMoney } from './converter.js';
+import { convertMoney } from './converter.js';
 import { loadOptions } from './options.js';
 
-const select_source = document.querySelectorAll('select')[0];
+const select_source = document.querySelector('#source');
 const search_source = document.getElementById("search-source");
 
-const select_target = document.querySelectorAll('select')[1];
+const select_target = document.querySelector('#target');
 const search_target = document.getElementById('search-target');
 
-const convert = document.querySelector('#convert');
-const convertByRealTime = document.querySelector('#convertByRealTime');
-const reset = document.querySelector('#reset');
+const btn_convert = document.querySelector('#convert');
+const btn_convert_by_real_time = document.querySelector('#convertByRealTime');
+const btn_reset = document.querySelector('#reset');
+
+const LOCAL_JSON = "./json_files/data.json";
+const API_URL = "https://api.currencyapi.com/v3/latest?apikey=KL7RHTiYo19Y1yaIozLDbXLfdL3VdjvtxbOXL6SV";
 
 let sourceOptions = [];
 let targetOptions = [];
@@ -43,22 +46,34 @@ function renderTargetOptions() {
     });
 }
 
-async function setup() {
+// IIFE function
+(async function() {
     try {
         await loadOptions();
         initializeSearch();
-        // console.log("System is ready: Options loaded and search initialized.");
-        convert.disabled = false;
+        console.log("System is ready: Options are loaded and search is initialized.");
     } catch(err) {
         console.error(`Setup failed: ${err}`);
     }
-}
-setup();
+}) ();
 
-convert.addEventListener('click', convertMoney);
-convertByRealTime.addEventListener('click', convertMoneyByRealTime);
-reset.addEventListener('click', () => location.reload());
-document.addEventListener('keypress', (event) => event.key === 'Enter' ? convertMoneyByRealTime() : 
-    event.altKey && event.key === "Enter" ? convertMoney() : null);
+btn_convert.addEventListener('click', (event)=>{
+    convertMoney(LOCAL_JSON, event.target);
+});
+
+btn_convert_by_real_time.addEventListener('click', (event) => {
+    convertMoney(API_URL, event.target);
+});
+
+btn_reset.addEventListener('click', () => {
+    location.reload();
+});
+
+document.addEventListener('keypress', (event) => {
+    event.key === 'Enter' ? 
+    convertMoney(API_URL,btn_convert_by_real_time) : 
+    event.altKey && event.key === "Enter" ? convertMoney(LOCAL_JSON, btn_convert) : null;
+});
+
 search_target.addEventListener('keyup', renderTargetOptions);
 search_source.addEventListener('keyup', renderSourceOptions);
