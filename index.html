@@ -21,16 +21,28 @@
             <h2>Currency Converter</h2>
             <span></span>
             <input type="number" placeholder="Enter amount:" min="0" step="0.01" required id="value" autocomplete="off">
-            <select id="source" title="Choose source currency" required>
-                <option value="" selected disabled>Choose The Source Currency</option>
-                <!-- options.html -->
-            </select>
+            <div class="currency-row">
+                <img id="source-flag" src="./logo/global_flag.png" alt="flag">
+                <select id="source" title="Choose source currency" required>
+                    <option value="" selected disabled>Choose The Source Currency</option>
+                    <!-- options.html -->
+                </select>
+            </div>
+            
             <input type="search" id="search-source" placeholder="Search Source (optional):" autocomplete="off">
             
-            <select id="target" title="Choose the target currency" required>
-                <option value="" selected disabled>Choose The Target Currency</option>
-                <!-- options.html -->
-            </select>
+            <div id="swap-container">
+                <button id="swap-btn" type="button" title="Swap Currencies">⇄</button>
+            </div>
+
+            <div class="currency-row">
+                <img id="target-flag" src="./logo/global_flag.png" alt="flag">
+                <select id="target" title="Choose the target currency" required>
+                    <option value="" selected disabled>Choose The Target Currency</option>
+                    <!-- options.html -->
+                </select>
+            </div>
+
             <input type="search" id="search-target" placeholder="Search target  (optional):" autocomplete="off">
             <input type="text" id="result" placeholder="Result:" readonly>
             <div class="btns">

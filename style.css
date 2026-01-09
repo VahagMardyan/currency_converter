@@ -2,140 +2,237 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    user-select: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    background-color: #0f3c58;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
 }
 
 #parent {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    width: 100%;
+    max-width: 450px;
 }
 
 .main {
-    width: 50vw;
-    height: max-content;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
+    gap: 15px;
+}
+
+h2 {
+    color: #333;
     text-align: center;
-    gap: 25px;
-    border: 1px solid black;
-    background-color: #06283D;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    outline: none;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+input:focus, select:focus {
+    border-color: #764ba2;
+    box-shadow: 0 0 8px rgba(118, 75, 162, 0.2);
+}
+
+#result {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #2d3436;
+    border: 2px dashed #764ba2;
 }
 
 .btns {
-    width: 100%;
-    display: flex;
-}
-
-#result,
-#value,
-select,
-#search-source,
-#search-target {
-    width: 100%;
-    height: 50px;
-    border: 1px solid black;
-    font-size: 20px;
-    background-color: #0f3c58;
-}
-
-#result::placeholder,
-#value::placeholder,
-#search-source::placeholder,
-#search-target::placeholder {
-    color: rgb(219, 209, 209);
-}
-
-select {
-    cursor: pointer;
-}
-
-span {
-    font-size: 2em;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 button {
-    width: 50%;
-    height: 40px;
-    border: 1px solid black;
-    font-size: 20px;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
     cursor: pointer;
-    background-color: #0f3c58;
-    transition: 0.5s;
+    font-weight: 600;
+    transition: transform 0.2s, background 0.3s;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+#convert {
+    background-color: #764ba2;
+    color: white;
+    grid-column: span 1;
+}
+
+#reset {
+    background-color: #e74c3c;
+    color: white;
+}
+
+#convertByRealTime {
+    background-color: #27ae60;
+    color: white;
+    grid-column: span 2;
 }
 
 button:hover {
-    background-color: #06283D;
+    opacity: 0.9;
 }
 
-#parent,
-.main,
-.btns,
-select,
-#result,
-#value,
-button,
-#search-source,
-#search-target {
-    color: #dFF6FF;
+button:active {
+    transform: scale(0.95); /* Կոճակը սեղմելիս մի փոքր փոքրանում է */
 }
 
-.links {
-    width: 100%;
-    height: min-content;
+input::placeholder {
+    color: #bbb;
+    font-size: 0.9rem;
+}
+
+.main {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+#swap-container {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    position: fixed;
-    background-color: #06283D;
+    justify-content: center;
+    margin: -10px 0; /* Մի փոքր մոտեցնում է սելեկտներին */
 }
 
-a {
-    color: #dFF6FF;
+#swap-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: #764ba2;
+    color: white;
     font-size: 20px;
-    transition: 0.5s;
-    text-decoration: none;
-    background-color: #0f3c58;
+    border: 3px solid white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 5;
 }
 
-a:hover {
-    color: #9ccfe4;
-    background-color: #06283D;
+#swap-btn:hover {
+    background-color: #667eea;
+    transform: rotate(180deg);
 }
 
-@media screen and (max-width: 600px) {
+.currency-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.currency-row img {
+    width: 35px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 3px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.flag-placeholder {
+    width: 35px;
+    height: 35px;
+    background: #764ba2;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 480px) {
     .main {
-        width: 90vw;
-        gap: 15px;
+        padding: 20px;
+        gap: 12px;
     }
 
-    button,
-    #result,
-    #value,
-    select,
-        #search-source,
-    #search-target {
-        height: 45px;
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    input, select, button {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .btns {
+        grid-template-columns: 1fr;
+    }
+
+    #convert, #reset, #convertByRealTime {
+        grid-column: span 1;
+    }
+
+    #swap-btn {
+        width: 40px;
+        height: 40px;
         font-size: 18px;
     }
 
-    span {
-        font-size: 1.5em;
+    .currency-row img {
+        width: 30px;
     }
+}
 
-    .links {
-        flex-direction: column;
-        gap: 10px;
-        position: static;
+@media (min-width: 481px) and (max-width: 768px) {
+    #parent {
+        max-width: 400px;
     }
+}
 
-    a {
-        font-size: 18px;
+/* Dark mode */
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    }
+    .main {
+        background: #1f1f1f;
+        color: white;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    }
+    h2 { 
+        color: #fff;
+    }
+    input, select {
+        background: #2d2d2d;
+        border-color: #444;
+        color: white;
+    }
+    #result {
+        background: #252525;
+        border-color: #27ae60;
     }
 }
