@@ -56,8 +56,10 @@ input:focus, select:focus {
     font-weight: bold;
     color: #2d3436;
     border: 2px dashed #764ba2;
+    opacity: 1;
+    -webkit-text-fill-color: #2d3436;
 }
-
+ 
 .btns {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -154,19 +156,6 @@ input::placeholder {
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
 }
 
-.flag-placeholder {
-    width: 35px;
-    height: 35px;
-    background: #764ba2;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: bold;
-}
-
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -234,5 +223,13 @@ input::placeholder {
     #result {
         background: #252525;
         border-color: #27ae60;
+    }
+
+    #result[readonly] {
+        background: #252525;
+        border-color: #27ae60;
+        color: #ffffff; 
+        -webkit-text-fill-color: #ffffff;
+        opacity: 1;
     }
 }
