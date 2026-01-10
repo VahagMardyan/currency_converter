@@ -15,15 +15,23 @@ const btn_swap = document.getElementById('swap-btn');
 const source_flag = document.getElementById('source-flag');
 const target_flag = document.getElementById('target-flag');
 
+const LOCAL_JSON = "./json_files/data.json";
+const API_URL = "https://api.currencyapi.com/v3/latest?apikey=KL7RHTiYo19Y1yaIozLDbXLfdL3VdjvtxbOXL6SV";
+
+let sourceOptions = [];
+let targetOptions = [];
+
 function updateFlag(selectElement, flagElement) {
-    let countryCode = selectElement.value.slice(0,2);
+    const countryCode = selectElement.value.slice(0,2);
+    const global_flag = "./logo/global_flag.png";
+    flagElement.alt = countryCode;
+
     if(selectElement.value === "EUR") {
         flagElement.src = "./logo/eu_flag.png";
     } else {
         flagElement.src = `https://flagsapi.com/${countryCode}/flat/64.png`;
     }
-    flagElement.alt = countryCode;
-    const global_flag = "./logo/global_flag.png";
+    
     flagElement.onerror = () => {
         flagElement.src = global_flag;
         flagElement.onerror = null;
@@ -37,12 +45,6 @@ select_source.addEventListener('change', () => {
 select_target.addEventListener('change', () => {
     updateFlag(select_target, target_flag);
 });
-
-const LOCAL_JSON = "./json_files/data.json";
-const API_URL = "https://api.currencyapi.com/v3/latest?apikey=KL7RHTiYo19Y1yaIozLDbXLfdL3VdjvtxbOXL6SV";
-
-let sourceOptions = [];
-let targetOptions = [];
 
 function initializeSearch() {
     sourceOptions = Array.from(select_source.options);
@@ -141,7 +143,7 @@ btn_swap.addEventListener('click', ()=> {
 
 document.addEventListener('keypress', (event) => {
     event.key === 'Enter' ? 
-    convertMoney(API_URL,btn_convert_by_real_time) : 
+    convertMoney(API_URL, btn_convert_by_real_time) : 
     event.altKey && event.key === "Enter" ? convertMoney(LOCAL_JSON, btn_convert) : null;
 });
 

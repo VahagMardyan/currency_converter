@@ -5,12 +5,17 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+*:not(#result) {
+    user-select: none;
+}
+
 body {
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    overflow: hidden;
     padding: 20px;
 }
 
@@ -106,7 +111,7 @@ button:active {
 }
 
 input::placeholder {
-    color: #bbb;
+    color: #464242;
     font-size: 0.9rem;
 }
 
@@ -223,6 +228,10 @@ input::placeholder {
     #result {
         background: #252525;
         border-color: #27ae60;
+    }
+
+    input::placeholder {
+        color: #bbb;
     }
 
     #result[readonly] {
