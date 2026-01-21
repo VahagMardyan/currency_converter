@@ -16,7 +16,8 @@ const source_flag = document.getElementById('source-flag');
 const target_flag = document.getElementById('target-flag');
 
 const LOCAL_JSON = "./json_files/data.json";
-const API_URL = "https://api.currencyapi.com/v3/latest?apikey=KL7RHTiYo19Y1yaIozLDbXLfdL3VdjvtxbOXL6SV";
+const API_KEY = "YOUR_API_KEY";
+const API_URL = `https://api.currencyapi.com/v3/latest?apikey=${API_KEY}`;
 
 let sourceOptions = [];
 let targetOptions = [];
