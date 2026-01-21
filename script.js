@@ -21,6 +21,22 @@ const API_URL = "https://api.currencyapi.com/v3/latest?apikey=KL7RHTiYo19Y1yaIoz
 let sourceOptions = [];
 let targetOptions = [];
 
+function initializeSearch() {
+    sourceOptions = Array.from(select_source.options);
+    targetOptions = Array.from(select_target.options);
+}
+
+// IIFE function
+(async function() {
+    try {
+        await loadOptions();
+        initializeSearch();
+        console.log("System is ready: Options are loaded and search is initialized.");
+    } catch(err) {
+        console.error(`Setup failed: ${err}`);
+    }
+}) ();
+
 function updateFlag(selectElement, flagElement) {
     const countryCode = selectElement.value.slice(0,2);
     const global_flag = "./logo/global_flag.png";
@@ -46,68 +62,34 @@ select_target.addEventListener('change', () => {
     updateFlag(select_target, target_flag);
 });
 
-function initializeSearch() {
-    sourceOptions = Array.from(select_source.options);
-    targetOptions = Array.from(select_target.options);
-}
-
-function renderSourceOptions() {
-    const searchTerm = search_source.value.toLowerCase();
-    select_source.innerHTML = '';
+function renderOptions(search_el, select_el, el_options, el_flag) {
+    const searchTerm = search_el.value.toLowerCase();
+    select_el.innerHTML = '';
 
     if(searchTerm === "") {
-        sourceOptions.forEach(option => select_source.append(option));
-        select_source.selectedIndex = 0;
-        updateFlag(select_source, source_flag);
+        el_options.map(option => select_el.append(option));
+        select_el.selectedIndex = 0;
+        updateFlag(select_el, el_flag);
         return;
     }
-
-    sourceOptions.forEach((option) => {
+    el_options.map((option) => {
         const optionText = option.innerText.toLowerCase();
-        if (optionText.includes(searchTerm) || searchTerm === '') {
-            select_source.append(option);
+        if(optionText.includes(searchTerm) || searchTerm === '') {
+            select_el.append(option);
         }
     });
-    if(select_source.options.length > 0) {
-        updateFlag(select_source, source_flag);
+    if(select_el.options.length > 0) {
+        updateFlag(select_el, el_flag);
     }
 }
 
-function renderTargetOptions() {
-    const searchTerm = search_target.value.toLowerCase();
-    select_target.innerHTML = '';
+search_source.addEventListener('input', ()=> {
+    renderOptions(search_source, select_source, sourceOptions, source_flag);
+});
 
-    if(searchTerm === "") {
-        targetOptions.forEach(option => select_target.append(option));
-        select_target.selectedIndex = 0;
-        updateFlag(select_target, target_flag);
-        return;
-    }
-
-    targetOptions.forEach((option) => {
-        const optionText = option.innerText.toLowerCase();
-        if (optionText.includes(searchTerm) || searchTerm === '') {
-            select_target.append(option);
-        }
-    });
-    if(select_target.options.length > 0) {
-        updateFlag(select_target, target_flag);
-    }
-}
-
-search_source.addEventListener('input', renderSourceOptions);
-search_target.addEventListener('input', renderTargetOptions);
-
-// IIFE function
-(async function() {
-    try {
-        await loadOptions();
-        initializeSearch();
-        console.log("System is ready: Options are loaded and search is initialized.");
-    } catch(err) {
-        console.error(`Setup failed: ${err}`);
-    }
-}) ();
+search_target.addEventListener('input', ()=>{
+    renderOptions(search_target, select_target, targetOptions, target_flag);
+});
 
 btn_convert.addEventListener('click', (event)=>{
     convertMoney(LOCAL_JSON, event.target);
@@ -121,7 +103,7 @@ btn_reset.addEventListener('click', () => {
     location.reload();
 });
 
-btn_swap.addEventListener('click', ()=> {
+function swapCurrencies() {
     const currentSource = select_source.value;
     const currentTarget = select_target.value;
     
@@ -139,7 +121,9 @@ btn_swap.addEventListener('click', ()=> {
 
     updateFlag(select_source, source_flag);
     updateFlag(select_target, target_flag);
-});
+}
+
+btn_swap.addEventListener('click', swapCurrencies);
 
 document.addEventListener('keypress', (event) => {
     event.key === 'Enter' ? 
@@ -147,5 +131,3 @@ document.addEventListener('keypress', (event) => {
     event.altKey && event.key === "Enter" ? convertMoney(LOCAL_JSON, btn_convert) : null;
 });
 
-search_target.addEventListener('keyup', renderTargetOptions);
-search_source.addEventListener('keyup', renderSourceOptions);
