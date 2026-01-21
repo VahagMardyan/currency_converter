@@ -1,5 +1,10 @@
 import { convertMoney } from './converter.js';
 import { loadOptions } from './options.js';
+// import API_KEY from "./ApiKey.js";
+
+const API_KEY = "YOUR_API_KEY";
+const LOCAL_JSON = "./json_files/data.json";
+const API_URL = `https://api.currencyapi.com/v3/latest?apikey=${API_KEY}`;
 
 const select_source = document.querySelector('#source');
 const search_source = document.getElementById("search-source");
@@ -15,9 +20,16 @@ const btn_swap = document.getElementById('swap-btn');
 const source_flag = document.getElementById('source-flag');
 const target_flag = document.getElementById('target-flag');
 
-const LOCAL_JSON = "./json_files/data.json";
-const API_KEY = "YOUR_API_KEY";
-const API_URL = `https://api.currencyapi.com/v3/latest?apikey=${API_KEY}`;
+let cachedLocalData = null;
+fetch(LOCAL_JSON)
+.then(response => response.json())
+.then(data => {
+    cachedLocalData = data;
+    btn_convert.title = `Convert as of ${data.meta['last_updated_at']}`;
+})
+.catch(err=>{
+    console.error(`Local JSON failed to load: ${err}`);
+});
 
 let sourceOptions = [];
 let targetOptions = [];
@@ -93,7 +105,11 @@ search_target.addEventListener('input', ()=>{
 });
 
 btn_convert.addEventListener('click', (event)=>{
-    convertMoney(LOCAL_JSON, event.target);
+    if(cachedLocalData) {
+        convertMoney(cachedLocalData, event.target);
+    } else {
+        convertMoney(LOCAL_JSON, event.target);
+    }
 });
 
 btn_convert_by_real_time.addEventListener('click', (event) => {
@@ -126,9 +142,13 @@ function swapCurrencies() {
 
 btn_swap.addEventListener('click', swapCurrencies);
 
-document.addEventListener('keypress', (event) => {
-    event.key === 'Enter' ? 
-    convertMoney(API_URL, btn_convert_by_real_time) : 
-    event.altKey && event.key === "Enter" ? convertMoney(LOCAL_JSON, btn_convert) : null;
-});
+document.addEventListener('keyup', (event) => {
+    event.key === 'Enter' ? convertMoney(API_URL, btn_convert_by_real_time) : null;
 
+    if(event.key === "Escape") {
+        const activeElem = document.activeElement;
+        if(activeElem.tagName === "INPUT") {
+            activeElem.value = "";
+        }
+    }
+});
